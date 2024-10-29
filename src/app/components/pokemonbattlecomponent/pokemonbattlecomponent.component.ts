@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Pokemon } from '../../models/pokemon.models';
 import { PokemonServiceService } from '../../services/pokemon-service.service';
 
 @Component({
@@ -7,7 +6,27 @@ import { PokemonServiceService } from '../../services/pokemon-service.service';
   templateUrl: './pokemonbattlecomponent.component.html',
   styleUrl: './pokemonbattlecomponent.component.css'
 })
-export class PokemonbattlecomponentComponent implements OnInit {
+export class PokemonbattlecomponentComponent {
+   // TURN possible values: 1, 2
+   pokemonTurn = 1;
+   pokemonPlayer1Id = 55;
+   pokemonPlayer2Id = 24;
+   lifePokemon1 = 100;
+   lifePokemon2 = 100;
+ 
+   applyDamage(damage: number) {
+     if (this.pokemonTurn == 1) {
+       // Apply damage to Pokemon 2
+      this.lifePokemon2 -= damage;
+       this.pokemonTurn = 2;
+     } else {
+       // Apply damage to Pokemon 1
+      this.lifePokemon1 -= damage;
+       this.pokemonTurn = 1;
+     }
+   }
+  }
+  /*
   listOfPokemon: Pokemon[] = [];
   salud1: number = 100; // Salud de Charizard
   salud2: number = 100; // Salud de Blastoise
@@ -16,7 +35,7 @@ export class PokemonbattlecomponentComponent implements OnInit {
   constructor(private pokemonService: PokemonServiceService) {}
 
   ngOnInit(): void {
-    this.pokemonService.getPokemon().subscribe(respuesta => {
+    this.pokemonService.getPokemon(Pokemon.id).subscribe(respuesta => {
       this.listOfPokemon = respuesta.results;
     });
   }
@@ -37,4 +56,4 @@ export class PokemonbattlecomponentComponent implements OnInit {
       this.salud1 = Math.max(0, this.salud1 - damage); // Resta vida a Charizard
       this.isCharizardTurn = true; // Cambia el turno de nuevo a Charizard
     }
-  }
+  }*/

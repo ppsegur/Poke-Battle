@@ -1,3 +1,5 @@
+
+<!--
 <div class="d-flex justify-content-center">
     <div class="col-12 text-center">
         <h1>Pokemon Battle</h1>
@@ -35,4 +37,31 @@
             }
         </div>
     </div>
-</div>
+</div>-->
+
+<div class="card" style="width: 18rem;">
+    <img [src] ="pokemon?.sprites?.front_default" class="card-title" alt="Card image cap">
+    <div class="card-body" >
+        <h3 class="card-title">{{pokemon?.name}}</h3>
+        <strong>Height</strong>{{pokemon?.height}}<br>
+        <strong>Weight:</strong>{{pokemon?.weight}}<br>
+        <ngb-progressbar
+        class="mb-3"
+        [type]="getProgrssBarColor()"
+        [value]="life"
+        [striped]="true"
+        [animated]="true"
+        [max]="100"
+        ><i> {{life}}%</i>
+        
+       
+        </ngb-progressbar>
+        @if(isTurn == true){
+            <a href="#" class="btn btn-primary" (click)="doAttack()">Atacar</a>
+        }
+        
+        
+
+        </div>
+  </div>
+  

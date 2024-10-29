@@ -1,14 +1,56 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, input, Input, OnInit, output, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PokemonServiceService } from '../../services/pokemon-service.service';
-import { Move, Pokemon } from '../../models/pokemon.models';
+import { PokemonResponse } from '../../models/pokemon.models';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-pokemoncomponent',
   templateUrl: './pokemoncomponent.component.html',
-  styleUrl: './pokemoncomponent.component.css'
+  styleUrls: ['./pokemoncomponent.component.css']
 })
-export class PokemoncomponentComponent {
+export class PokemoncomponentComponent implements OnInit {
+  //Constructor pasamos el servicio
+  constructor(private pokemonService: PokemonServiceService) {}
+  
+  //Variables
+  @Input() pokemonId: number | undefined ;
+  pokemon: PokemonResponse | undefined;
+  @Input() isTurn: boolean = false;
+  @Input() life: number = 100;
+  //VAriable que le mandaremos al componente padre
+  @Output() attack = new EventEmitter<number>();
+
+  
+  ngOnInit(): void {
+    this.pokemonService.getPokemon(this.pokemonId!).subscribe(pokemonResponse => {
+      this.pokemon = pokemonResponse;
+    });
+  }
+  
+
+  getProgrssBarColor(): string {
+    if(this.life>=70){
+      return 'bg-success';
+    }else if(this.life>=30){
+      return 'bg-warning';
+    }else if(this.life>=0){
+      return 'bg-danger';
+    }
+    return 'bg-default'; // Default return statement
+  }
+
+  doAttack(){
+  var damage= Math.floor(Math.random() *(30-10)) + 10;
+  this.attack.emit(damage);
+  
+  
+
+  }
+
+
+
+  /*
 listOfPokemom: Pokemon[] = [];
 @Input() pokemon!: Pokemon;
 @Input() salud!: number;
@@ -36,5 +78,5 @@ getSaludColor(): string {
     this.pokemonService.getPokemon().subscribe(respuesta => {
       this.listOfPokemom = respuesta.results;
     })
-}
+}*/
 }
