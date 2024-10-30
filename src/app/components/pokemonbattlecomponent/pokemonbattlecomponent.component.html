@@ -1,20 +1,20 @@
 <div class="container fluid">
-  <div class="row">
-    <div class="col-md-4 col-12">
-      <app-pokemoncomponent
-        [pokemonId]="pokemonPlayer1Id"
-        [life] = "lifePokemon1"
-        [isTurn]="pokemonTurn==1"
-        (onAttackDone)="applyDamage(10)"
-      ></app-pokemoncomponent>
-    </div>
-    <div class="col-md-4 col-12">
-      <app-pokemoncomponent
-        [pokemonId]="pokemonPlayer2Id"
-        [life] = "lifePokemon2"
-        [isTurn]="pokemonTurn==2"
-        (onAttackDone)="applyDamage(20)"
-      ></app-pokemoncomponent>
+    <div class="row">
+      <div class="col-md-4 col-12">
+        <app-pokemon
+          [pokemonId]="pokemonPlayer1Id"
+          [life]="lifePokemon1"
+          [isMyTurn]="pokemonTurn == 1"
+          (onAttackDone)="applyDamage($event)"
+        ></app-pokemon>
+      </div>
+      <div class="col-md-4 col-12">
+        <app-pokemon
+          [pokemonId]="pokemonPlayer2Id"
+          [life]="lifePokemon2"
+          [isMyTurn]="pokemonTurn == 2"
+          (onAttackDone)="applyDamage($event)"
+        ></app-pokemon>
+      </div>
     </div>
   </div>
-</div>

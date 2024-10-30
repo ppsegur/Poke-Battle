@@ -1,82 +1,67 @@
-import { Component, EventEmitter, input, Input, OnInit, output, Output } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
+
+
+import { AnimationOptions } from 'ngx-lottie';
 import { PokemonServiceService } from '../../services/pokemon-service.service';
 import { PokemonResponse } from '../../models/pokemon.models';
-import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-pokemoncomponent',
+  selector: 'app-pokemon',
   templateUrl: './pokemoncomponent.component.html',
-  styleUrls: ['./pokemoncomponent.component.css']
+  styleUrls: ['./pokemoncomponent.component.css'],
 })
-export class PokemoncomponentComponent implements OnInit {
-  //Constructor pasamos el servicio
-  constructor(private pokemonService: PokemonServiceService) {}
-  
-  //Variables
-  @Input() pokemonId: number | undefined ;
-  pokemon: PokemonResponse | undefined;
-  @Input() isTurn: boolean = false;
+export class PokemonComponent implements OnInit {
+  options: AnimationOptions = {
+    path: '/assets/animation_explosion.json',
+  };
+
+  @Input() pokemonId: number | undefined;
+  pokemon: PokemonResponse| undefined;
   @Input() life: number = 100;
-  //VAriable que le mandaremos al componente padre
-  @Output() attack = new EventEmitter<number>();
+  @Output() onAttackDone = new EventEmitter<number>();
+  @Input() isMyTurn: boolean = false;
+  showAnimation: boolean = false;
 
-  
+  constructor(private pokemonService: PokemonServiceService) {}
+
   ngOnInit(): void {
-    this.pokemonService.getPokemon(this.pokemonId!).subscribe(pokemonResponse => {
-      this.pokemon = pokemonResponse;
-    });
+    this.pokemonService
+      .getPokemon(this.pokemonId!)
+      .subscribe((PokemonResponse: any) => {
+        this.pokemon = PokemonResponse;
+      });
   }
-  
 
-  getProgrssBarColor(): string {
-    if(this.life>=70){
-      return 'bg-success';
-    }else if(this.life>=30){
-      return 'bg-warning';
-    }else if(this.life>=0){
-      return 'bg-danger';
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['life']) {
+      if (changes['life'].firstChange == false) {
+        this.showAnimation = true;
+        setTimeout(() => {
+          this.showAnimation = false;
+        }, 1000);
+      }
     }
-    return 'bg-default'; // Default return statement
   }
 
-  doAttack(){
-  var damage= Math.floor(Math.random() *(30-10)) + 10;
-  this.attack.emit(damage);
-  
-  
-
+  getProgressBarColor(): string {
+    if (this.life >= 70) {
+      return 'success';
+    } else if (this.life >= 40) {
+      return 'warning';
+    } else {
+      return 'danger';
+    }
   }
 
-
-
-  /*
-listOfPokemom: Pokemon[] = [];
-@Input() pokemon!: Pokemon;
-@Input() salud!: number;
-@Input() isTurn!: boolean; // Control de turnos
-@Output() ataque = new EventEmitter<number>(); // Evento para enviar el daño al componente padre
-
-constructor(private pokemonService: PokemonServiceService) {}
-// Métodos de ataque
-ataque1() {
-  if (this.isTurn) {
-    this.ataque.emit(10); // Ataque con daño de 10
-    //Restar en la barra 
-    this.salud = Math.max(0, this.salud - 10);
+  doAttack() {
+    var damage = Math.floor(Math.random() * (30 - 10) + 10);
+    this.onAttackDone.emit(damage);
   }
-}
-
-// Método para retornar el color de la barra de salud
-getSaludColor(): string {
-  if (this.salud <= 25) return 'danger';
-  else if (this.salud > 25 && this.salud <= 50) return 'warning';
-  else return 'success';
-}
-
-  ngOnInit(): void {
-    this.pokemonService.getPokemon().subscribe(respuesta => {
-      this.listOfPokemom = respuesta.results;
-    })
-}*/
 }
