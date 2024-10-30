@@ -3,11 +3,11 @@
     @if(showAnimation) {
     <ng-lottie [options]="options"></ng-lottie>
     <audio autoplay>
-      <source src="/assets/medium_explosion.mp3" type="audio/mpeg" />
+      <source src="../../../../public/assets/animatio_explosion.json" type="audio/mpeg" />
     </audio>
     } @else{
     <img
-      [src]="pokemon?.sprites?.front_default"
+      [src]="pokemon ? (pokemon | customUrlImage) : ''"
       class="card-img-top"
       [alt]="pokemon?.name"
     />
@@ -26,7 +26,7 @@
           ><i>{{ life }}%</i></ngb-progressbar
         >
       </p>
-      @if(pokemonId == 1 || pokemonId == 2){
+     @if(life > 0){
       @if(isMyTurn == true){
       <button (click)="doAttack()" class="btn btn-primary">Attack</button>
       } @else {
@@ -34,10 +34,11 @@
         Waiting attack..
       </button>
     }
-      }else {
-      <h3>Bbatalla terminada</h3>
-      
+  }
+    @else{
+    <button disabled="disabled" class="btn btn-danger">Dead</button>
     }
+  
     
     </div>
   </div>

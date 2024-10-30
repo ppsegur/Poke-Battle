@@ -15,6 +15,8 @@ export class PokemonbattlecomponentComponent {
    lifePokemon2 = 100;
  
    applyDamage(damage: number) {
+    if (this.lifePokemon1 > 0 && this.lifePokemon2 > 0) { //Si ocurre algún error en la partida con el
+     //     daño a un pokemon ya debilitado, se mostrará un alerta de fin de partida
      if (this.pokemonTurn == 1) {
        // Apply damage to Pokemon 2
       this.lifePokemon2 -= damage;
@@ -24,8 +26,12 @@ export class PokemonbattlecomponentComponent {
       this.lifePokemon1 -= damage;
        this.pokemonTurn = 1;
      }
+
+   }else{
+      alert('Fin de la partida');
    }
   }
+}
   /*
   listOfPokemon: Pokemon[] = [];
   salud1: number = 100; // Salud de Charizard
