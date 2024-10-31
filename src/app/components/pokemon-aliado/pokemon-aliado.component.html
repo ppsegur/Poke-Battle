@@ -1,0 +1,49 @@
+<div class="container">
+    <div class="card" style="width: 18rem">
+        @if(showAnimation) {
+            <ng-lottie [options]="options"></ng-lottie>
+            <audio autoplay>
+                <source src="../../../../public/assets/animatio_explosion.json" type="audio/mpeg" />
+            </audio>
+        } @else {
+            <img
+                [src]="pokemon ? (pokemon | curstomUlrBack) : ''"
+                class="card-img-top"
+                [alt]="pokemon?.name"
+            />
+        }
+        <div class="card-body">
+            <h5 class="card-title">{{ pokemon?.name }}</h5>
+            <p class="card-text">
+                <strong>Height:</strong> {{ pokemon?.height }} <br />
+                <strong>Weight:</strong> {{ pokemon?.weight }} <br />
+                <ngb-progressbar
+                    class="mb-3"
+                    [type]="getProgressBarColor()"
+                    [value]="life"
+                    [striped]="true"
+                    [animated]="true"
+                ><i>{{ life }}%</i></ngb-progressbar>
+            </p>
+        </div>
+    </div>
+
+    <div class="action-area">
+        @if(life > 0) {
+            @if(isMyTurn) {
+                @if(listadoMovimientos.length > 0) {
+                    <h3>Choose</h3>
+                    <ng-container *ngFor="let item of listadoMovimientos">
+                        <button (click)="doAttack()" class="btn btn-primary action-button">{{ item }}</button>
+                    </ng-container>
+                } @else {
+                    <button disabled="disabled" class="btn btn-secondary">No moves available</button>
+                }
+            } @else {
+                <button disabled="disabled" class="btn btn-secondary">Waiting attack..</button>
+            }
+        } @else {
+            <button disabled="disabled" class="btn btn-danger">Dead</button>
+        }
+    </div>
+</div>

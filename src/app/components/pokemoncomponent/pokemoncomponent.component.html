@@ -26,16 +26,7 @@
           ><i>{{ life }}%</i></ngb-progressbar
         >
       </p>
-     @if(life > 0){
-      @if(isMyTurn == true){
-      <button (click)="doAttack()" class="btn btn-primary">Attack</button>
-      } @else {
-      <button disabled="disabled" class="btn btn-primary">
-        Waiting attack..
-      </button>
-    }
-  }
-    @else{
+     @if(life < 0) {
     <button disabled="disabled" class="btn btn-danger">Dead</button>
     }
   

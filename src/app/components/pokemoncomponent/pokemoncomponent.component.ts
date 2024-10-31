@@ -38,7 +38,7 @@ export class PokemonComponent implements OnInit {
         this.pokemon = PokemonResponse;
       });
   }
-
+  /*
   ngOnChanges(changes: SimpleChanges) {
     if (changes['life']) {
       if (changes['life'].firstChange == false) {
@@ -48,7 +48,27 @@ export class PokemonComponent implements OnInit {
         }, 1000);
       }
     }
+  }*/
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['life'] && !changes['life'].firstChange) {
+      // Muestra la animación cuando la vida cambia
+      this.showAnimation = true;
+      setTimeout(() => {
+        this.showAnimation = false;
+      }, 1000);
+    }
+  
+    if (changes['isMyTurn'] && this.isMyTurn) {
+      // Espera unos segundos antes de atacar automáticamente
+      setTimeout(() => {
+        if (this.isMyTurn) {  // Asegura que aún es el turno
+          this.doAttack();
+        }
+      }, 2000); // Cambia el tiempo según prefieras
+    }
   }
+  
 
   getProgressBarColor(): string {
     if (this.life >= 70) {

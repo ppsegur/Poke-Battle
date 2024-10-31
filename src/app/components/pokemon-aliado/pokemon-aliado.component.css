@@ -1,0 +1,29 @@
+.container {
+    display: flex; /* Utiliza flexbox para alinear los elementos */
+    align-items: flex-start; /* Alinea los elementos en la parte superior */
+    gap: 20px; /* Espacio entre los elementos */
+}
+
+.action-area {
+    display: flex;
+    flex-direction: column; /* Mantiene el contenido vertical */
+    justify-content: center; /* Centra verticalmente el contenido */
+    width: 200px; /* Ajusta el ancho según sea necesario */
+    padding: 1rem; /* Espaciado interno */
+    background-color: #a9c586; /* Color de fondo */
+    border: 4px solid #000; /* Borde */
+    border-radius: 8px; /* Bordes redondeados */
+}
+
+.action-area h3 {
+    margin-bottom: 1rem; /* Espaciado debajo del título */
+}
+
+.action-button {
+    margin: 0.5rem 0; /* Espaciado entre botones */
+    transition: background-color 0.3s; /* Transición suave para el cambio de color */
+}
+
+.action-button:hover {
+    background-color: #007bff; /* Color de fondo al pasar el mouse */
+}
